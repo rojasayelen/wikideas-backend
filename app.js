@@ -1,29 +1,29 @@
-const mongo  = require("./configuracion/mongo");
-const express = require("express")
+// Importar dependencias
+const mongo = require("./configuracion/mongo");
+const express = require("express");
 const cors = require("cors")
 
+// Mensaje de bienvenida
+console.log("Api node para red social Arrancada!!");
 
-// iniciar app
-console.log("App de node arrancada");
 
-
-// Conectar a base de datos
+// Conexion a la base de datos
 mongo();
 
-// Crear servidor de node
+// Crear servidor node
 const app = express();
 const puerto = 3900;
 
-// Configurar cors
+// configurar cors 
 app.use(cors());
 
-// convertir body a objeto js
-app.use(express.json()); // recibir datos con content- type app/json
-app.use(express.urlencoded({extended:true})); // form-url-encoer
+// Convertir los datos del body a objetos js
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 
 
-// Crear servidores y escuchar peticiones http
+// Poner servidor a escuchar peticiones http
 app.listen(puerto, () => {
-    console.log("servidor corriendo en el puerto: "+ puerto);
+    console.log("Servidor de Node ocrriendo en el puerto:", puerto)
 });
