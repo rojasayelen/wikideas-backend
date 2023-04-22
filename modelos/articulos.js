@@ -10,3 +10,5 @@ const ArticuloSchema = Schema({
         require: [true, 'El contenido del artículo es requerido']
     }
 })
+
+module.exports = ('Articulo', ArticuloSchema); 
