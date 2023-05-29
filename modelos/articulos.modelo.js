@@ -10,17 +10,14 @@ const ArticuloSchema = new Schema({
         require: [true, 'El contenido del artículo es requerido']
     },
     imagen: {
-        type: String
+        type: String,
     },
     fecha: {
-            type: Date
-    },
-    createdAt: {
-            type: Date
-    },
-    updatedAt: {
-            type: Date
-    }
-});
+            type: Date,
+            default: Date.now
+    },  
+}, 
+{ timestamps: true },
+);
 
 module.exports = model('Articulo', ArticuloSchema); 
