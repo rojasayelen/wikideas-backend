@@ -1,17 +1,26 @@
-// const {Schema, model } = require('mongoose');
+const {Schema, model } = require('mongoose');
 
-// const ArticuloSchema = Schema({
-//     titulo: {
-//         type: String,
-//         require: [true, 'El título es obligatorio']
-//     },
-//     cuerpo: {
-//         type: String,
-//         require: [true, 'El contenido del artículo es requerido']
-//     },
-//     img: {
-//         type: String
-//     }
-// })
+const ArticuloSchema = new Schema({
+    titulo: {
+        type: String,
+        require: [true, 'El título es obligatorio']
+    },
+    contenido: {
+        type: String,
+        require: [true, 'El contenido del artículo es requerido']
+    },
+    imagen: {
+        type: String
+    },
+    fecha: {
+            type: Date
+    },
+    createdAt: {
+            type: Date
+    },
+    updatedAt: {
+            type: Date
+    }
+});
 
-// module.exports = ('Articulo', ArticuloSchema); 
+module.exports = model('Articulo', ArticuloSchema); 
