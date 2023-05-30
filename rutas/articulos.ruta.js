@@ -7,11 +7,11 @@ const { fieldsValidation } = require('../middlewares/fields-validator');
 const { check } = require('express-validator');
 
 const { articuloGet, articuloPost } = require('../controladores/articulos.controlador');
-
-// const router = Router();
-
+ 
+//ruta de consulta de articulos  
 router.get('/articulos', articuloGet);
 
+//ruta de creacion de articulos con validaciones de campos obligatorios
 router.post('/crearArticulo', [
     check('titulo', 'El titulo es obligatorio').not().isEmpty(),
     check('contenido', 'El contenido es obligatorio').not().isEmpty(),

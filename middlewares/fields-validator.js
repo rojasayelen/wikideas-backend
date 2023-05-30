@@ -1,3 +1,5 @@
+//Manejador de errores por validaciones de campos
+
 const { validationResult } = require('express-validator');
 
 const fieldsValidation = (req, res , next ) => {

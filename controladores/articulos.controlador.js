@@ -3,11 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Articulo = require('../modelos/articulos.modelo');
 
-const articuloGet = async (req, res = response) => {
-
-    // res.send({message: 'probando get'});
-};
-
+//controlador de creacion de articulos
 const articuloPost = async (req, res) => {
     //res.send({message: 'probando post'});
    try {
@@ -30,5 +26,11 @@ const articuloPost = async (req, res) => {
         res.status(500).send(error);   
     }
 }
+
+//controlador de consultas 
+const articuloGet = async (req, res = response) => {
+
+    // res.send({message: 'probando get'});
+};
 
 module.exports = { articuloGet, articuloPost}
