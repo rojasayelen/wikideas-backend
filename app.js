@@ -27,6 +27,6 @@ app.use('/api', require('./rutas/articulos.ruta'));
 
 // Poner servidor a escuchar peticiones http
 app.listen(puerto, () => {
-    console.log("Servidor de Node corriendo en el puerto:", puerto)
+    console.log("Servidor de Node corriendo en http://localhost:"+ puerto)
 });
 
