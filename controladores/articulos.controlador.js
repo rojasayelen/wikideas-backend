@@ -5,7 +5,7 @@ const Articulo = require('../modelos/articulos.modelo');
 
 const articuloGet = async (req, res = response) => {
 
-    res.send({message: 'probando get'});
+    // res.send({message: 'probando get'});
 };
 
 const articuloPost = async (req, res) => {
