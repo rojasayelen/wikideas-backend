@@ -6,15 +6,23 @@ const cors = require('cors');
 const { fieldsValidation } = require('../middlewares/fields-validator');
 const { check } = require('express-validator');
 
-const { articuloGet, articuloPost } = require('../controladores/articulos.controlador');
+const { 
+    articuloPost,
+    articuloGet,
+    buscarGet,
+    articuloPut,
+  } = require('../controladores/articulos.controlador');
  
 //ruta de consulta de articulos  
-router.get('/articulos', articuloGet);
+router.get('/articulos/consulta', articuloGet);
+router.get('/id:', articuloPut);
+router.get('/buscar/:palabra', buscarGet);
 
 //ruta de creacion de articulos con validaciones de campos obligatorios
 router.post('/crearArticulo', [
     check('titulo', 'El titulo es obligatorio').not().isEmpty(),
     check('contenido', 'El contenido es obligatorio').not().isEmpty(),
-], fieldsValidation,articuloPost);
+], fieldsValidation, articuloPost);
+
 
 module.exports = router;

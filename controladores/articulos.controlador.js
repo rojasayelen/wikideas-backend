@@ -29,12 +29,62 @@ const articuloPost = async (req, res) => {
 }
 
 
-//controlador de consultas
+//Listar todos los documentos
 const articuloGet = async (req, res = response) => {
+  try {	
+    const articulos = await Articulo.find();
+        res.status(200).send(articulos);
+      } catch (error) {
+        console.log(error);
+        res.status(500).send(error);        
+ };
+}
 
 
-    // res.send({message: 'probando get'});
-};
+const buscarGet =  async (req, res) =>{
+  try{
+    let consultas;
+    if (req.query.q) {
+      consultas = await Articulo.find(
+        {$text: {
+          $search: req.query.q
+        }},
+        {
+          score: { $meta: 'textScore' } //Score clasifica los resultados desde el que mas se ajusta a su buscada hasta el que menos
+        }
+      ).sort({
+        score: { $meta: 'textScore' }
+      })
+    }
+    res.status(200).send(consultas);
+  }catch {
+    res.status(500).json({msg: 'error en la busqueda'});
+  }
+}
 
 
-module.exports = { articuloGet, articuloPost}
+
+const articuloPut = async (req, res = response) => {
+  try {
+    const { titulo, contenido, imagen } = req.body;
+    let articulo = await Articulo.findId(req.params.id);
+      if(!articulo) {
+        res.status(404).send('no se ha podido realizar la petiticion');
+      }
+
+      Articulo.titulo = titulo;
+      Articulo.contenido = contenido;
+      Articulo.imagen = imagen;
+
+    } catch (error) {
+    console.log(error);
+        res.status(500).send(error);
+  }
+}
+
+module.exports = { 
+  articuloPost,
+  articuloGet, 
+  buscarGet,
+  articuloPut 
+}
