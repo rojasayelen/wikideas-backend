@@ -40,38 +40,45 @@ const articuloGet = async (req, res = response) => {
   };
 }
 
-//TODO: para buscar en la descripcion utilizar split
-const buscarGet = async (req, res = response) => {
-  //try { 
-    const consultas = req.params.titulo;
-    Articulo.find(consultas)
+
+const buscarGet = async (req, res) => {
+  try {
+    console.log('Consulta de búsqueda:', req.params.palabra); // Verifica el valor del parámetro de búsqueda
+
+    let consultas = [];
+    if (req.params.palabra) {
+      consultas = await Articulo.find(
+        {
+          $or:[ { contenido: { $regex: req.params.palabra, $options: 'i' } },
+                { titulo: { $regex: req.params.palabra, $options: 'i' } }],
+          $text: {
+            $search: req.params.palabra,
+          },
+        },
+        {
+          score: { $meta: 'textScore' } // Score clasifica los resultados desde el que más se ajusta a su búsqueda hasta el que menos
         }
-      
-    
-    //   if (titulo) {
+      ).sort({fecha: -1});
+    }
 
-    //     consultas = await Articulo.find(
-    //       {
-    //         $text: {
-    //           $search: req.query.q, options: 'i'
-    //         }
-    //       },
-    //       {
-    //         score: { $meta: 'textScore' } //Score clasifica los resultados desde el que mas se ajusta a su buscada hasta el que menos
-    //       }
-    //     ).sort({
-    //       score: { $meta: 'textScore' }
-    //     })
-    //   }
-    //   console.log(consultas, 'consultas');
-    //   res.status(200).json(consultas);
-    // }
-    // catch (error) {
-    //   console.log(error, 'este es el error');
-    //   res.status(500).json({ msg: 'error en la busqueda' });
+    console.log('Consulta MongoDB:', consultas); // Verifica el valor de las consultas de MongoDB
 
-    // }
-  
+    res.status(200).json(consultas);
+  } catch (error) {
+    res.status(500).json({ msg: 'Error en la búsqueda', error: error.message });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
 
 
 
