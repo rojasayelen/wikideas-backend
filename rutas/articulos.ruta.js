@@ -16,7 +16,7 @@ const {
 //ruta de consulta de articulos  
 router.get('/articulos/consulta', articuloGet);
 router.get('/id:', articuloPut);
-router.get('/buscar/:palabra', buscarGet);
+router.get('/buscar/:consultas', buscarGet);
 
 //ruta de creacion de articulos con validaciones de campos obligatorios
 router.post('/crearArticulo', [
