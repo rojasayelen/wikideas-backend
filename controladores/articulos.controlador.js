@@ -6,45 +6,44 @@ const Articulo = require('../modelos/articulos.modelo');
 
 //controlador de creacion de articulos
 const articuloPost = async (req, res) => {
-
-  try {
+   
+   try {
     const params = req.body;
     const articulo = new Articulo({
-      titulo: params.titulo,
-      contenido: params.contenido,
-      imagen: params.imagen,
-      fecha: params.fecha
+        titulo: params.titulo,
+        contenido: params.contenido,
+        imagen: params.imagen,
+        fecha: params.fecha
     });
-
+   
     articulo.save().then((articuloStored) => {
-      if (!articuloStored) {
-        res.status(404).send('no se ha podido realizar la petiticion');
-      } else {
-        res.status(200).send(articuloStored);
-      }
+        if(!articuloStored){
+            res.status(404).send('no se ha podido realizar la petiticion');
+        }else{
+            res.status(200).send(articuloStored);
+        }    
     });
-  } catch (error) {
-    res.status(500).send(error);
-  }
+    } catch (error) {
+        res.status(500).send(error);  
+    }
 }
 
 
-//Listar todos los documentos
+//Controlador para listar todos los documentos
 const articuloGet = async (req, res = response) => {
-  try {
+  try {	
     const articulos = await Articulo.find();
-    res.status(200).send(articulos);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  };
+        res.status(200).send(articulos);
+      } catch (error) {
+        console.log(error);
+        res.status(500).send(error);        
+ };
 }
 
-
+//Controlador de busqueda por palabra
 const buscarGet = async (req, res) => {
   try {
-    console.log('Consulta de búsqueda:', req.params.palabra); // Verifica el valor del parámetro de búsqueda
-
+     
     let consultas = [];
     if (req.params.palabra) {
       consultas = await Articulo.find(
@@ -69,24 +68,12 @@ const buscarGet = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Controlador para update articulo
 const articuloPut = async (req, res = response) => {
-    try {
-      const { titulo, contenido, imagen } = req.body;
-      let articulo = await Articulo.findId(req.params.id);
-      if (!articulo) {
+  try {
+    const { titulo, contenido, imagen } = req.body;
+    let articulo = await Articulo.findId(req.params.id);
+      if(!articulo) {
         res.status(404).send('no se ha podido realizar la petiticion');
       }
 
@@ -95,14 +82,14 @@ const articuloPut = async (req, res = response) => {
       Articulo.imagen = imagen;
 
     } catch (error) {
-      console.log(error);
-      res.status(500).send(error);
-    }
+    console.log(error);
+        res.status(500).send(error);
   }
+}
 
-  module.exports = {
-    articuloPost,
-    articuloGet,
-    buscarGet,
-    articuloPut
-  }
+module.exports = { 
+  articuloPost,
+  articuloGet, 
+  buscarGet,
+  articuloPut 
+}
