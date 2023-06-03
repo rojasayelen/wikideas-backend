@@ -43,19 +43,16 @@ const articuloGet = async (req, res = response) => {
 //Controlador de busqueda por palabra
 const buscarGet = async (req, res) => {
   try {
-     
+    console.log('Consulta de búsqueda:', req.params.palabra); // Verifica el valor del parámetro de búsqueda
+
     let consultas = [];
     if (req.params.palabra) {
       consultas = await Articulo.find(
         {
-          $or:[ { contenido: { $regex: req.params.palabra, $options: 'i' } },
-                { titulo: { $regex: req.params.palabra, $options: 'i' } }],
-          $text: {
-            $search: req.params.palabra,
-          },
-        },
-        {
-          score: { $meta: 'textScore' } // Score clasifica los resultados desde el que más se ajusta a su búsqueda hasta el que menos
+          $or: [
+            { titulo: regex }, // Buscar en el campo "titulo" que coincida con la palabra
+            { contenido: regex }, // Buscar en el campo "contenido" que coincida con la palabra
+          ],  
         }
       ).sort({fecha: -1});
     }
