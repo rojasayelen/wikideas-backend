@@ -47,14 +47,17 @@ const buscarGet = async (req, res) => {
 
     let consultas = [];
     if (req.params.palabra) {
+      const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
+
       consultas = await Articulo.find(
         {
           $or: [
             { titulo: regex }, // Buscar en el campo "titulo" que coincida con la palabra
             { contenido: regex }, // Buscar en el campo "contenido" que coincida con la palabra
-          ],  
-        }
-      ).sort({fecha: -1});
+          ],
+        },
+      ).sort({ fecha: -1 });
+      
     }
 
     console.log('Consulta MongoDB:', consultas); // Verifica el valor de las consultas de MongoDB
@@ -65,7 +68,24 @@ const buscarGet = async (req, res) => {
   }
 };
 
-//Controlador para update articulo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const articuloPut = async (req, res = response) => {
   try {
     const { titulo, contenido, imagen } = req.body;

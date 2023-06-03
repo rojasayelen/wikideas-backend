@@ -21,7 +21,6 @@ const ArticuloSchema = new Schema({
 }, 
 { timestamps: true },
 );
-
-ArticuloSchema.index({ contenido: 'text', titulo: 'text' }); // Índice de texto para el campo "contenido y titulo"
+ArticuloSchema.index({ titulo: 'text', contenido: 'text' }); // Crear índice de texto en los campos "titulo" y "contenido"
 
 module.exports = model('Articulo', ArticuloSchema); 
