@@ -6,38 +6,38 @@ const Articulo = require('../modelos/articulos.modelo');
 
 //controlador de creacion de articulos
 const articuloPost = async (req, res) => {
-   
-   try {
+
+  try {
     const params = req.body;
     const articulo = new Articulo({
-        titulo: params.titulo,
-        contenido: params.contenido,
-        imagen: params.imagen,
-        fecha: params.fecha
+      titulo: params.titulo,
+      contenido: params.contenido,
+      imagen: params.imagen,
+      fecha: params.fecha
     });
-   
+
     articulo.save().then((articuloStored) => {
-        if(!articuloStored){
-            res.status(404).send('no se ha podido realizar la petiticion');
-        }else{
-            res.status(200).send(articuloStored);
-        }    
+      if (!articuloStored) {
+        res.status(404).send('no se ha podido realizar la petiticion');
+      } else {
+        res.status(200).send(articuloStored);
+      }
     });
-    } catch (error) {
-        res.status(500).send(error);  
-    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 }
 
 
 //Controlador para listar todos los documentos
 const articuloGet = async (req, res = response) => {
-  try {	
+  try {
     const articulos = await Articulo.find();
-        res.status(200).send(articulos);
-      } catch (error) {
-        console.log(error);
-        res.status(500).send(error);        
- };
+    res.status(200).send(articulos);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  };
 }
 
 //Controlador de busqueda por palabra
@@ -85,28 +85,27 @@ const buscarGet = async (req, res) => {
 
 
 
-
 const articuloPut = async (req, res = response) => {
   try {
     const { titulo, contenido, imagen } = req.body;
     let articulo = await Articulo.findId(req.params.id);
-      if(!articulo) {
-        res.status(404).send('no se ha podido realizar la petiticion');
-      }
+    if (!articulo) {
+      res.status(404).send('no se ha podido realizar la petiticion');
+    }
 
-      Articulo.titulo = titulo;
-      Articulo.contenido = contenido;
-      Articulo.imagen = imagen;
+    Articulo.titulo = titulo;
+    Articulo.contenido = contenido;
+    Articulo.imagen = imagen;
 
-    } catch (error) {
+  } catch (error) {
     console.log(error);
-        res.status(500).send(error);
+    res.status(500).send(error);
   }
 }
 
-module.exports = { 
+module.exports = {
   articuloPost,
-  articuloGet, 
+  articuloGet,
   buscarGet,
-  articuloPut 
+  articuloPut
 }
