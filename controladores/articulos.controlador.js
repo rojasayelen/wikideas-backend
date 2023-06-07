@@ -41,6 +41,8 @@ const articuloGet = async (req, res = response) => {
 }
 
 //Controlador de busqueda por palabra
+//TODO: palabra ="" y palabra no encontrada en bbdd --> error y respuesta
+
 const buscarGet = async (req, res) => {
   try {
     let consultas = [];
@@ -68,8 +70,6 @@ const buscarGet = async (req, res) => {
       })
       
     }
-
-    console.log('Consulta MongoDB:', consultas); // Verifica el valor de las consultas de MongoDB
 
     res.status(200).json(consultas);
   } catch (error) {
