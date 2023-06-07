@@ -43,9 +43,8 @@ const articuloGet = async (req, res = response) => {
 //Controlador de busqueda por palabra
 const buscarGet = async (req, res) => {
   try {
-    console.log('Consulta de búsqueda:', req.params.palabra); // Verifica el valor del parámetro de búsqueda
-
     let consultas = [];
+    
     if (req.params.palabra) {
       const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
 
@@ -56,7 +55,17 @@ const buscarGet = async (req, res) => {
             { contenido: regex }, // Buscar en el campo "contenido" que coincida con la palabra
           ],
         },
-      ).sort({ fecha: -1 });
+      );
+    //ordenando alfabeticamente los resultados de las consultas
+      const lista = consultas.sort((a, b) => {
+        if (a.titulo > b.titulo ) {
+          return 1;
+        } else if (a.titulo == b.titulo){
+          return 0;
+        }else {
+          return -1;
+        }
+      })
       
     }
 
