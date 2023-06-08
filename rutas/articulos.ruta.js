@@ -15,7 +15,6 @@ const {
  
 //ruta de consulta de articulos  
 router.get('/articulos/consulta', articuloGet);
-router.get('/:id', articuloPut);
 router.get('/buscar/:palabra', buscarGet);
 
 //ruta de creacion de articulos con validaciones de campos obligatorios
@@ -24,5 +23,7 @@ router.post('/crearArticulo', [
     check('contenido', 'El contenido es obligatorio').not().isEmpty(),
 ], fieldsValidation, articuloPost);
 
+//ruda de edicion de articulos
+router.put('/articulo/:id', articuloPut)
 
 module.exports = router;

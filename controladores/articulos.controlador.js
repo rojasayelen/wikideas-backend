@@ -46,10 +46,12 @@ const articuloGet = async (req, res = response) => {
 const buscarGet = async (req, res) => {
   try {
     let consultas = [];
-    
-    if (req.params.palabra) {
-      const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
+    const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
+    const palabra = req.params.palabra;
 
+    if (!palabra) {
+      res.status(404).send({msg: 'Not Found'});
+    } else if (palabra ) {
       consultas = await Articulo.find(
         {
           $or: [
@@ -75,41 +77,34 @@ const buscarGet = async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: 'Error en la búsqueda', error: error.message });
   }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}; 
 
 const articuloPut = async (req, res = response) => {
-  try {
-    const { titulo, contenido, imagen } = req.body;
-    let articulo = await Articulo.findId(req.params.id);
-    if (!articulo) {
-      res.status(404).send('no se ha podido realizar la petiticion');
-    }
+  // try {
+  //   const { titulo, contenido, imagen } = req.body;
+  //   let articulo = await Articulo.findId(req.params.id);
+  //   if (!articulo) {
+  //     res.status(404).send('no se ha podido realizar la petiticion');
+  //   }
 
-    Articulo.titulo = titulo;
-    Articulo.contenido = contenido;
-    Articulo.imagen = imagen;
+  //   Articulo.titulo = titulo;
+  //   Articulo.contenido = contenido;
+  //   Articulo.imagen = imagen;
 
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
+  // } catch (error) {
+  //   console.log(error);
+  //   res.status(500).send(error);
+  // }
+  const { id } = req.params;
+  console.log(id, 'este es el id');
+  const { imagen, fecha, ...data } = req.body;
+
+  const articulo = await Articulo.findByIdAndUpdate(
+    
+    id, data, { new: true });
+    console.log(articulo, 'este es el articulo');
+
+    res.json(articulo);
 }
 
 module.exports = {
