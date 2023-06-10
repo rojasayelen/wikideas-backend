@@ -10,7 +10,7 @@ const {
     articuloPost,
     articuloGet,
     buscarGet,
-    articuloPut,
+    //articuloPut,
   } = require('../controladores/articulos.controlador');
  
 //ruta de consulta de articulos  
@@ -24,6 +24,6 @@ router.post('/crearArticulo', [
 ], fieldsValidation, articuloPost);
 
 //ruda de edicion de articulos
-router.put('/articulo/:id', articuloPut)
+//router.put('/articulo/:id', articuloPut)
 
 module.exports = router;

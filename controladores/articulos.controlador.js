@@ -79,7 +79,7 @@ const buscarGet = async (req, res) => {
   }
 }; 
 
-const articuloPut = async (req, res = response) => {
+//const articuloPut = async (req, res = response) => {
   // try {
   //   const { titulo, contenido, imagen } = req.body;
   //   let articulo = await Articulo.findId(req.params.id);
@@ -95,21 +95,21 @@ const articuloPut = async (req, res = response) => {
   //   console.log(error);
   //   res.status(500).send(error);
   // }
-  const { id } = req.params;
-  console.log(id, 'este es el id');
-  const { imagen, fecha, ...data } = req.body;
+  //const { id } = req.params;
+//   console.log(id, 'este es el id');
+//   const { imagen, fecha, ...data } = req.body;
 
-  const articulo = await Articulo.findByIdAndUpdate(
+//   const articulo = await Articulo.findByIdAndUpdate(
     
-    id, data, { new: true });
-    console.log(articulo, 'este es el articulo');
+//     id, data, { new: true });
+//     console.log(articulo, 'este es el articulo');
 
-    res.json(articulo);
-}
+//     res.json(articulo);
+// }
 
 module.exports = {
   articuloPost,
   articuloGet,
   buscarGet,
-  articuloPut
+  //articuloPut
 }
