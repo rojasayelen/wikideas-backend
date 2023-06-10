@@ -1,44 +1,44 @@
-const { response } = require('express');
-const fs = require('fs');
-const path = require('path');
-const Articulo = require('../modelos/articulos.modelo');
+// const { response } = require('express');
+// const fs = require('fs');
+// const path = require('path');
+// const Articulo = require('../modelos/articulos.modelo');
 
 
-//controlador de creacion de articulos
-const articuloPost = async (req, res) => {
+// //controlador de creacion de articulos
+// const articuloPost = async (req, res) => {
 
-  try {
-    const params = req.body;
-    const articulo = new Articulo({
-      titulo: params.titulo,
-      contenido: params.contenido,
-      imagen: params.imagen,
-      fecha: params.fecha
-    });
+//   try {
+//     const params = req.body;
+//     const articulo = new Articulo({
+//       titulo: params.titulo,
+//       contenido: params.contenido,
+//       imagen: params.imagen,
+//       fecha: params.fecha
+//     });
 
-    articulo.save().then((articuloStored) => {
-      if (!articuloStored) {
-        res.status(404).send('no se ha podido realizar la petiticion');
-      } else {
-        res.status(200).send(articuloStored);
-      }
-    });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-}
+//     articulo.save().then((articuloStored) => {
+//       if (!articuloStored) {
+//         res.status(404).send('no se ha podido realizar la petiticion');
+//       } else {
+//         res.status(200).send(articuloStored);
+//       }
+//     });
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// }
 
 
-//Controlador para listar todos los documentos
-const articuloGet = async (req, res = response) => {
-  try {
-    const articulos = await Articulo.find();
-    res.status(200).send(articulos);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  };
-}
+// //Controlador para listar todos los documentos
+// const articuloGet = async (req, res = response) => {
+//   try {
+//     const articulos = await Articulo.find();
+//     res.status(200).send(articulos);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send(error);
+//   };
+// }
 
 //Controlador de busqueda por palabra
 //TODO: palabra ="" y palabra no encontrada en bbdd --> error y respuesta
@@ -107,9 +107,9 @@ const articuloGet = async (req, res = response) => {
 //     res.json(articulo);
 // }
 
-module.exports = {
-  articuloPost,
-  articuloGet,
+// module.exports = {
+//   articuloPost,
+//   articuloGet,
   //buscarGet,
   //articuloPut
-}
+//}

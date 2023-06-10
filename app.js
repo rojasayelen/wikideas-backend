@@ -7,7 +7,7 @@ const cors = require("cors");
 console.log("Api node para pruebas");
 
 // Conexion a la base de datos
-mongo();
+//mongo();
 
 // Crear servidor node
 const app = express();
@@ -29,7 +29,7 @@ app.use(express.urlencoded({extended: true}));
 
 //Routers
 const router = express.Router();
-app.use('/api', require('./rutas/articulos.ruta'));
+//app.use('/api', require('./rutas/articulos.ruta'));
 
 //conexion con el front  
 // app.get('/api/data', (req, res) => {
