@@ -9,13 +9,13 @@ const { check } = require('express-validator');
 const { 
     articuloPost,
     articuloGet,
-    buscarGet,
+    //buscarGet,
     //articuloPut,
   } = require('../controladores/articulos.controlador');
  
 //ruta de consulta de articulos  
 router.get('/articulos/consulta', articuloGet);
-router.get('/buscar/:palabra', buscarGet);
+//router.get('/buscar/:palabra', buscarGet);
 
 //ruta de creacion de articulos con validaciones de campos obligatorios
 router.post('/crearArticulo', [

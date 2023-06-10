@@ -1,3 +1,4 @@
 node_modules
 index.http
 helpers/articulos.js
+.vercel

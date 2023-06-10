@@ -14,14 +14,14 @@ const app = express();
 const port = process.env.PORT || 3900;
 
 // configurar cors 
-//app.use(cors());
-app.use(
-    cors({
-      origin: 'http://wikideas-andreadev5.vercel.app',
-      methods: 'GET,POST',
-      allowedHeaders: 'Content-Type,Authorization',
-    })
-  );
+app.use(cors());
+// app.use(
+//     cors({
+//       origin: 'http://wikideas-andreadev5.vercel.app',
+//       methods: 'GET,POST',
+//       allowedHeaders: 'Content-Type,Authorization',
+//     })
+//   );
 
 // Convertir los datos del body a objetos js
 app.use(express.json());
