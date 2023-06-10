@@ -11,7 +11,7 @@ mongo();
 
 // Crear servidor node
 const app = express();
-const puerto = 3900;
+const port = process.env.PORT || 3900;
 
 // configurar cors 
 //app.use(cors());
@@ -32,13 +32,26 @@ const router = express.Router();
 app.use('/api', require('./rutas/articulos.ruta'));
 
 //conexion con el front  
-app.get('/api/data', (req, res) => {
-    const data = { message: 'Hola desde el backend!' };
-    res.json(data);
-  });
+// app.get('/api/data', (req, res) => {
+//     const data = { message: 'Hola desde el backend!' };
+//     res.json(data);
+//   });
+
+app.get("/", (req, res) => {
+  const htmlResponse = `
+    <html>
+      <head>
+        <title>Node JS y Express en Vercel</title>
+      </head>
+      <body>
+        <h1>Soy un proyecto backend en vercel</h1>
+      </body>
+    </html>`;
+  res.send(htmlResponse);  
+});
 
 // Poner servidor a escuchar peticiones http
-app.listen(puerto, () => {
-    console.log("Servidor de Node corriendo en http://localhost:"+ puerto)
+app.listen(port, () => {
+    console.log(`Servidor de Node corriendo en http://localhost:${port}`)
 });
 
