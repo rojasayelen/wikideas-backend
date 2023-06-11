@@ -7,21 +7,21 @@ const cors = require("cors");
 console.log("Api node para pruebas");
 
 // Conexion a la base de datos
-//mongo();
+mongo();
 
 // Crear servidor node
 const app = express();
-const port = process.env.PORT || 3900;
+const port = process.env.PORT || 3000;
 
 // configurar cors 
 app.use(cors());
-// app.use(
-//     cors({
-//       origin: 'http://wikideas-andreadev5.vercel.app',
-//       methods: 'GET,POST',
-//       allowedHeaders: 'Content-Type,Authorization',
-//     })
-//   );
+app.use(
+    cors({
+      origin: 'http://wikideas-andreadev5.vercel.app',
+      methods: 'GET,POST',
+      allowedHeaders: 'Content-Type,Authorization',
+    })
+  );
 
 // Convertir los datos del body a objetos js
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use(express.urlencoded({extended: true}));
 
 //Routers
 const router = express.Router();
-//app.use('/api', require('./rutas/articulos.ruta'));
+app.use('/api', require('./rutas/articulos.ruta'));
 
 //conexion con el front  
 // app.get('/api/data', (req, res) => {

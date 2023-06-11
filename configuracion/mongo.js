@@ -1,19 +1,18 @@
-// const mongoose = require("mongoose")
+const mongoose = require("mongoose")
 
-
-// const connection = async() => {
+const connection = async() => {
 
 //conexion monbo altas
-//     try{
-//         await mongoose.connect("mongodb+srv://wikideas:wikideas@cluster0.nxjvz1b.mongodb.net/wikideas");
+    try{
+        await mongoose.connect("mongodb+srv://wikideas:wikideas@cluster0.nxjvz1b.mongodb.net/wikideas");
 
-//         console.log("Conectado correctamente a bd: wikideas");
+        console.log("Conectado correctamente a bd: wikideas");
 
-//     }catch(error){
-//         console.log(error);
-//         throw new Error("No se ha podido conectar a la base de datos!!");
-//     }
-// }
+    }catch(error){
+        console.log(error);
+        throw new Error("No se ha podido conectar a la base de datos!!");
+    }
+}
 
 //conexion mongo local
     // try {
@@ -25,8 +24,4 @@
     //             throw new Error("No se ha podido conectar a la base de datos!!");
     // }
 
-
-    
-
-
-// module.exports= connection  
+module.exports= connection  
