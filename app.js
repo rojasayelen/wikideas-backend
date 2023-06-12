@@ -15,13 +15,21 @@ const port = process.env.PORT || 3000;
 
 // configurar cors 
 app.use(cors());
-app.use(
-    cors({
-      origin: 'http://wikideas-andreadev5.vercel.app',
-      methods: 'GET,POST',
-      allowedHeaders: 'Content-Type,Authorization',
-    })
-  );
+// app.use(
+//     cors({
+//       origin: 'http://wikideas-andreadev5.vercel.app',
+//       methods: 'GET,POST',
+//       allowedHeaders: 'Content-Type,Authorization',
+//     })
+//   );
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 
 // Convertir los datos del body a objetos js
 app.use(express.json());

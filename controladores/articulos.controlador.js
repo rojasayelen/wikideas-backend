@@ -46,12 +46,14 @@ const articuloGet = async (req, res = response) => {
 const buscarGet = async (req, res) => {
   try {
     let consultas = [];
-    const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
     const palabra = req.params.palabra;
 
-    if (!palabra) {
-      res.status(404).send({msg: 'Not Found'});
-    } else if (palabra ) {
+    if (palabra == null) {
+      res.status(404).send({msg:'debe ingresar una palabra'});
+    } else {
+     
+      const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
+    
       consultas = await Articulo.find(
         {
           $or: [
@@ -60,7 +62,7 @@ const buscarGet = async (req, res) => {
           ],
         },
       );
-     //ordenando alfabeticamente los resultados de las consultas
+    //ordenando alfabeticamente los resultados de las consultas
       const lista = consultas.sort((a, b) => {
         if (a.titulo > b.titulo ) {
           return 1;
@@ -73,43 +75,43 @@ const buscarGet = async (req, res) => {
       
     }
 
-    res.status(200).json(consultas);
+    res.status(200).send({msg: 'consulta ok', consultas});
   } catch (error) {
     res.status(500).json({ msg: 'Error en la búsqueda', error: error.message });
   }
 }; 
 
-const articuloPut = async (req, res = response) => {
-  try {
-    const { titulo, contenido, imagen } = req.body;
-    let articulo = await Articulo.findId(req.params.id);
-    if (!articulo) {
-      res.status(404).send('no se ha podido realizar la petiticion');
-    }
+// const articuloPut = async (req, res = response) => {
+//   try {
+//     const { titulo, contenido, imagen } = req.body;
+//     let articulo = await Articulo.findId(req.params.id);
+//     if (!articulo) {
+//       res.status(404).send('no se ha podido realizar la petiticion');
+//     }
 
-    Articulo.titulo = titulo;
-    Articulo.contenido = contenido;
-    Articulo.imagen = imagen;
+//     Articulo.titulo = titulo;
+//     Articulo.contenido = contenido;
+//     Articulo.imagen = imagen;
 
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-  const { id } = req.params;
-  console.log(id, 'este es el id');
-  const { imagen, fecha, ...data } = req.body;
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send(error);
+//   }
+//   const { id } = req.params;
+//   console.log(id, 'este es el id');
+//   const { imagen, fecha, ...data } = req.body;
 
-  const articulo = await Articulo.findByIdAndUpdate(
+//   const articulo = await Articulo.findByIdAndUpdate(
     
-    id, data, { new: true });
-    console.log(articulo, 'este es el articulo');
+//     id, data, { new: true });
+//     console.log(articulo, 'este es el articulo');
 
-    res.json(articulo);
-}
+//     res.json(articulo);
+// }
 
 module.exports = {
   articuloPost,
   articuloGet,
   buscarGet,
-  articuloPut
+  //articuloPut
 }

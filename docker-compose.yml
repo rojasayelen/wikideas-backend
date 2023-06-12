@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  chanchito:
+    build: .
+    ports:
+      - "3000:3000" 
+    links:
+      - "monguito"
+  monguito:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_URI=mongodb+srv://wikideas:wikideas@cluster0.nxjvz1b.mongodb.net/wikideas
