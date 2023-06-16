@@ -11,7 +11,7 @@ mongo();
 
 // Crear servidor node
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3900;
 
 // configurar cors 
 app.use(cors());
@@ -39,11 +39,7 @@ app.use(express.urlencoded({extended: true}));
 const router = express.Router();
 app.use('/api', require('./rutas/articulos.ruta'));
 
-//conexion con el front  
-// app.get('/api/data', (req, res) => {
-//     const data = { message: 'Hola desde el backend!' };
-//     res.json(data);
-//   });
+
 
 app.get("/", (req, res) => {
   const htmlResponse = `

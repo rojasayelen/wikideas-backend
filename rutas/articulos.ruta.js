@@ -6,12 +6,10 @@ const cors = require('cors');
 const { fieldsValidation } = require('../middlewares/fields-validator');
 const { check } = require('express-validator');
 
-const { 
-    articuloPost,
-    articuloGet,
-    buscarGet,
-    //articuloPut,
-  } = require('../controladores/articulos.controlador');
+const { articuloPost,
+        articuloGet} = require('../controladores/articulos.controlador');
+
+const { buscarGet } = require('../controladores/articuloBuscar.controlador'); 
  
 //ruta de consulta de articulos  
 router.get('/articulos/consulta', articuloGet);

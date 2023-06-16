@@ -40,46 +40,7 @@ const articuloGet = async (req, res = response) => {
   };
 }
 
-//Controlador de busqueda por palabra
-//TODO: palabra ="" y palabra no encontrada en bbdd --> error y respuesta
 
-const buscarGet = async (req, res) => {
-  try {
-    let consultas = [];
-    const palabra = req.params.palabra;
-
-    if (palabra == null) {
-      res.status(404).send({msg:'debe ingresar una palabra'});
-    } else {
-     
-      const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
-    
-      consultas = await Articulo.find(
-        {
-          $or: [
-            { titulo: regex }, // Buscar en el campo "titulo" que coincida con la palabra
-            { contenido: regex }, // Buscar en el campo "contenido" que coincida con la palabra
-          ],
-        },
-      );
-    //ordenando alfabeticamente los resultados de las consultas
-      const lista = consultas.sort((a, b) => {
-        if (a.titulo > b.titulo ) {
-          return 1;
-        } else if (a.titulo == b.titulo){
-          return 0;
-        }else {
-          return -1;
-        }
-      })
-      
-    }
-
-    res.status(200).send({msg: 'consulta ok', consultas});
-  } catch (error) {
-    res.status(500).json({ msg: 'Error en la búsqueda', error: error.message });
-  }
-}; 
 
 // const articuloPut = async (req, res = response) => {
 //   try {
@@ -111,7 +72,5 @@ const buscarGet = async (req, res) => {
 
 module.exports = {
   articuloPost,
-  articuloGet,
-  buscarGet,
-  //articuloPut
+  articuloGet
 }
