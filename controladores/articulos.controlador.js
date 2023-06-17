@@ -45,73 +45,105 @@ const articuloGet = async (req, res = response) => {
 
 const buscarGet = async (req, res) => {
   try {
-    let consultas = [];
     const palabra = req.params.palabra;
 
-    if (palabra == null) {
-      res.status(404).send({msg:'debe ingresar una palabra'});
-    } else {
-     
-      const regex = new RegExp(req.params.palabra, 'i'); // Expresión regular para buscar la palabra (insensible a mayúsculas y minúsculas)
-    
-      consultas = await Articulo.find(
-        {
-          $or: [
-            { titulo: regex }, // Buscar en el campo "titulo" que coincida con la palabra
-            { contenido: regex }, // Buscar en el campo "contenido" que coincida con la palabra
-          ],
-        },
-      );
-    //ordenando alfabeticamente los resultados de las consultas
-      const lista = consultas.sort((a, b) => {
-        if (a.titulo > b.titulo ) {
-          return 1;
-        } else if (a.titulo == b.titulo){
-          return 0;
-        }else {
-          return -1;
-        }
-      })
-      
+    // Verificar si no se proporcionó ninguna palabra
+    if (!palabra) {
+      return res.status(404).send({ msg: 'No se especificó ninguna palabra' });
     }
 
-    res.status(200).send({msg: 'consulta ok', consultas});
+    const regex = new RegExp(palabra, 'i'); // Expresión regular insensible a mayúsculas y minúsculas para buscar la palabra
+
+    let consultas = await Articulo.find({
+      $or: [
+        { titulo: regex }, // Buscar en el campo "titulo" que coincide con la palabra
+        { contenido: regex }, // Buscar en el campo "contenido" que coincide con la palabra
+      ],
+    });
+    
+    if (consultas.length === 0) {
+      return res.status(404).send({ msg: 'No se encontraron resultados' });
+    }
+      //ordenando alfabeticamente los resultados de las consultas
+      lista = consultas.sort((a, b) => {
+        if (a.titulo > b.titulo) {
+          return 1;
+        } else if (a.titulo === b.titulo) {
+          return 0;
+        } else {
+          return -1;
+        }
+      }).slice(0, 3);
+
+    res.status(200).send({ msg: 'Consulta exitosa', consultas: lista });
   } catch (error) {
     res.status(500).json({ msg: 'Error en la búsqueda', error: error.message });
   }
-}; 
+};
 
-// const articuloPut = async (req, res = response) => {
-//   try {
-//     const { titulo, contenido, imagen } = req.body;
-//     let articulo = await Articulo.findId(req.params.id);
-//     if (!articulo) {
-//       res.status(404).send('no se ha podido realizar la petiticion');
-//     }
 
-//     Articulo.titulo = titulo;
-//     Articulo.contenido = contenido;
-//     Articulo.imagen = imagen;
 
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send(error);
-//   }
-//   const { id } = req.params;
-//   console.log(id, 'este es el id');
-//   const { imagen, fecha, ...data } = req.body;
 
-//   const articulo = await Articulo.findByIdAndUpdate(
+
+
+
+
+ 
+
+const articuloPut = async (req, res) => {
+  try {
+    const { titulo, contenido, imagen } = req.body;
+    let articulo = await Articulo.findById(req.params.id);
     
-//     id, data, { new: true });
-//     console.log(articulo, 'este es el articulo');
+    if (!articulo) {
+      return res.status(404).send('No se ha podido realizar la petición');
+    }
 
-//     res.json(articulo);
-// }
+    articulo.titulo = titulo;
+    articulo.contenido = contenido;
+    articulo.imagen = imagen;
+
+    await articulo.save();
+
+    res.status(200).send(articulo);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+};
+const ultimosArticulosEditados = async (req, res) => {
+  try {
+    const fechaActual = new Date();
+
+    const articulos = await Articulo.aggregate([
+      {
+        $addFields: {
+          diferenciaTiempo: {
+            $subtract: [fechaActual, '$updatedAt']
+          }
+        }
+      },
+      {
+        $sort: { diferenciaTiempo: 1 } // Ordenar por la diferencia de tiempo ascendente
+      },
+      {
+        $limit: 3 // Limitar los resultados a 3 artículos
+      }
+    ]);
+
+    res.status(200).send(articulos);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+};
+
+
 
 module.exports = {
   articuloPost,
   articuloGet,
   buscarGet,
-  //articuloPut
+  articuloPut,
+  ultimosArticulosEditados
 }
